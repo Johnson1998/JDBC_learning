@@ -2,6 +2,7 @@ package com.zs;
 
 import org.junit.Test;
 
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.Driver;
@@ -25,7 +26,7 @@ public class ConnectionTest {
         Connection conn = driver.connect(url, info);
         System.out.println(conn);
     }
-//    方式二: 对方式一的迭代：在如下程序中不出现第三方的api， 是的程序具有更好的移植性
+    //    方式二: 对方式一的迭代：在如下程序中不出现第三方的api， 是的程序具有更好的移植性
     @Test
     public void testConnection2() throws Exception {
 //        1.获取Driver实现类对象，使用反射
@@ -42,7 +43,7 @@ public class ConnectionTest {
         System.out.println(conn);
 
     }
-//    方式三：使用DriverManager替换Driver
+    //    方式三：使用DriverManager替换Driver
     @Test
     public void testConnection3() throws Exception {
 //        获取Driver实现类对象
@@ -59,7 +60,7 @@ public class ConnectionTest {
         Connection conn = DriverManager.getConnection(url, user, password);
         System.out.println(conn);
     }
-//    方法四：只是加载驱动不需要显示的注册驱动了
+    //    方法四：只是加载驱动不需要显示的注册驱动了
     @Test
     public void testConnection4() throws Exception {
 
@@ -82,6 +83,28 @@ public class ConnectionTest {
         String user = "root";
         String password = "zhangshen1998";
 //        获取链接
+        Connection conn = DriverManager.getConnection(url, user, password);
+        System.out.println(conn);
+    }
+//    方法五（final版）,将数据库需要的4个基本信息声明在配置文件中，通过读取配置文件的方式获取连接
+    @Test
+    public void getConnection5() throws Exception{
+
+//        1.读取配置文件中的4个基本信息
+        InputStream is = ConnectionTest.class.getClassLoader().getResourceAsStream("jdbc.properties");
+
+        Properties pros = new Properties();
+        pros.load(is);
+
+        String user = pros.getProperty("user");
+        String password = pros.getProperty("password");
+        String url = pros.getProperty("url");
+        String driverClass = pros.getProperty("driverClass");
+
+        //2.加载驱动
+        Class.forName(driverClass);
+
+//        3.获取连接
         Connection conn = DriverManager.getConnection(url, user, password);
         System.out.println(conn);
     }
