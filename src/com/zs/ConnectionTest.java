@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.Driver;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -42,4 +43,17 @@ public class ConnectionTest {
 
     }
 //    方式三：使用DriverManager替换Driver
+    @Test
+    public void testConnection3() throws Exception {
+        Class clazz = Class.forName("com.mysql.cj.jdbc.Driver");
+        Driver driver = (Driver) clazz.getDeclaredConstructor().newInstance();
+        String url = "jdbc:mysql://localhost:3306/test";
+        String user = "root";
+        String password = "zhangshen1998";
+//        注册驱动
+        DriverManager.registerDriver(driver);
+//        获取链接
+        Connection conn = DriverManager.getConnection(url, user, password);
+        System.out.println(conn);
+    }
 }
