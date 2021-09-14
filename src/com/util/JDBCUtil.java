@@ -3,10 +3,7 @@ package com.util;
 import com.zs.ConnectionTest;
 
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 
 /**
@@ -46,6 +43,19 @@ public class JDBCUtil {
                 ps.close();
             if(conn != null)
                 conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void closeResource(Connection conn, PreparedStatement ps, ResultSet rs){
+        try {
+            if(ps != null)
+                ps.close();
+            if(conn != null)
+                conn.close();
+            if (rs != null) {
+                rs.close();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
