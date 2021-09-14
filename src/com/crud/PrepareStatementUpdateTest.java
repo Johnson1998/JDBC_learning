@@ -18,6 +18,22 @@ import java.util.Properties;
  */
 
 public class PrepareStatementUpdateTest {
+
+//    通用的增删改
+    public void update(String sql, Object ...args) throws Exception{    //sql中展位符的个数与可变形参的长度相同
+//        1.获取数据库的连接
+        Connection conn = JDBCUtil.getConnection();
+//        2.预编译sql语句，返回preparedStatement的实例
+        PreparedStatement ps = conn.prepareStatement(sql);
+//          3.填充占位符
+        for (int i = 0; i < args.length; i++) {
+            ps.setObject(i+1, args[i]); //参数从1开始，数组从0开始
+        }
+//        4.执行
+        ps.execute();
+//        5.关闭资源
+        JDBCUtil.closeResource(conn, ps);
+    }
 //    修改customers表的一条记录
     @Test
     public void testUpdate() {

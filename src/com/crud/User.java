@@ -1,4 +1,4 @@
-package com.atguigu2.statement.crud;
+package com.crud;
 
 public class User {
 

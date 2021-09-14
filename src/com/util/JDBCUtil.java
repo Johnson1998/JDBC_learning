@@ -40,7 +40,7 @@ public class JDBCUtil {
      * @author John
      * @create 2021-09-1410:14\
      */
-    public void closeResource(Connection conn, PreparedStatement ps){
+    public static void closeResource(Connection conn, PreparedStatement ps){
         try {
             if(ps != null)
                 ps.close();

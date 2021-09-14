@@ -1,4 +1,4 @@
-package com.atguigu2.statement.crud;
+package com.crud;
 
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -16,10 +16,9 @@ import org.junit.Test;
 public class StatementTest {
 
 	// 使用Statement的弊端：需要拼写sql语句，并且存在SQL注入的问题
-	@Test
-	public void testLogin() {
-		Scanner scan = new Scanner(System.in);
 
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
 		System.out.print("用户名：");
 		String userName = scan.nextLine();
 		System.out.print("密   码：");
@@ -38,7 +37,7 @@ public class StatementTest {
 	}
 
 	// 使用Statement实现对数据表的查询操作
-	public <T> T get(String sql, Class<T> clazz) {
+	public static <T> T get(String sql, Class<T> clazz) {
 		T t = null;
 
 		Connection conn = null;
